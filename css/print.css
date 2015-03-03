@@ -1,0 +1,15 @@
+@media print{
+	#all{
+		background: none;
+	}
+	
+	
+	#menu, .forms, .sidebar, #rButtons{
+		display: none !important;
+	}
+	
+	#copyright{
+		margin-top:100px;
+	}
+	
+}
