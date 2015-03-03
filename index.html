@@ -1,0 +1,283 @@
+<!doctype html>
+
+<html lang="ru">
+<head>
+
+  <title>Cube3</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Калькулятор Cube3 призначений для розрахунку необхідої кількості будвіельних матеріалів">
+  <meta name="keywords" content="Калькулятор, Cube3, цегла, газобетон, пінопласт, екструдований, будівельні матеріали, розрахунок">
+  <meta name="author" content="stvyzxx">
+  <link href='http://fonts.googleapis.com/css?family=Ubuntu+Condensed&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="css/style.css" media="all">
+	<script src="js/jquery-1.11.1.min.js" type="text/javascript"></script>
+	
+
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+		<div id="all">
+			  <div id='wrapper'>
+				  <header>
+					<div id="logo"><h1 id="hLogo"><img src="images/logo.png" alt="logo"></h1></div>
+					<div id='menu'>
+					<ul id="menuUl">
+						<li class="menuLi" id="File">
+							<a href="#">Файл</a>
+							<ul>
+								<li class="innerMenuLi"><a href="#" onclick="window.print()">Друк</a></li>
+								<li class="innerMenuLi"><a href="javascript:window.open(window.location, '_self').close();"  onclick="window.close()">Вихід</a></li>
+							</ul>
+						</li>
+						<li class="menuLi" id="Options">
+							<a href="#">Опції</a>
+							<ul>
+
+								<li class="innerMenuLi"><a href="#" onclick="onResetClick()">Очистити</a></li>
+								<li class="innerMenuLi"><a href="#" onclick="document.getElementById('gasLink').click();">Газобетон</a></li>
+								<li class="innerMenuLi"><a href="#"  onclick="document.getElementById('brickLink').click();">Цегла</a></li>
+								<li class="innerMenuLi"><a href="#" onclick="document.getElementById('pinLink').click();">Пінопласт</a></li>
+								<li class="innerMenuLi"><a href="#" onclick="document.getElementById('eksPinLink').click();">Екструдований п.</a></li>
+							</ul>
+						</li>
+						<li class="menuLi" id="About">
+							<a href="#" onclick="about.show(); return false;">Про програму</a>
+						</li>
+					</ul>
+					</div>
+				  </header>
+			 
+			   <div id='calculators'>
+				<h2 id="tabsLabel">Калькулятор </h2>
+				<ul id="tabsUl">
+					<li class="tabs"><a href="#" class="activeTab" id='gasLink' onclick="switcher('gas'); return false;">Газобетон</a></li>
+					<li class="tabs"><a href="#" id='brickLink' onclick="switcher('brick'); return false;">Цегла</a></li>
+					<li class="tabs"><a href="#" id='pinLink' onclick="switcher('pin'); return false;">Пінопласт</a></li>
+					<li class="tabs"><a href="#" id='eksPinLink' onclick="switcher('eksPin'); return false;">Екструдований пінопласт</a></li>
+				</ul>
+					<div class="display" id='display'>
+						<div id="innerDisplay"></div>
+					</div>
+					
+				 <div id='rButtons'> 
+					<span>Переключити на:</span><br>    
+					<input class='radioB' id='show' type="radio" onclick="radio('cubeForm')" name="myRadios"   checked="checked"  /><label for="show" class="tool-tip" data-title="Вираховує об'єм в кубічних метрах" >Калькулятор об'єму</label><br>
+					<input class='radioB' id='hide' type="radio" onclick="radio('areaForm')" name="myRadios"  /><label for="hide" class="tool-tip" data-title="Вираховує необхідну кількість матеріалів згідно вказаних даних" >Калькулятор розрахунку кількості</label>
+				  </div>	
+					
+					
+		<!-- Gas form -->				
+				<div class="forms" id='gazobeton'>
+					<form class='cubeForm'>
+					<label for="Gselect">Виберіть товщину -</label>
+					<select name="Gselect" id="Gselect">
+						<option value="0.06">60мм</option>
+						<option value="0.08">80мм</option>
+						<option value="0.1">100мм</option>
+						<option value="0.12">120мм</option>
+						<option value="0.18">180мм</option>
+						<option value="0.24">240мм</option>
+						<option value="0.3">300мм</option>
+						<option value="0.36">360мм</option>
+						
+					</select><br>
+					<br>
+					<label for="Gquantity">Введіть потрібну кількість -</label>
+					<input type="text" name="Gquantity" id="Gquantity" onkeyup = "if(event.keyCode==13) {document.getElementById('subm').click();}else if(event.keyCode==27) {document.getElementById('reset').click();}"><br>			
+					  <input class="button subm" onclick="gasCube()" type="button" value="Порахувати" />
+					 <input class="button reset" id='reset' onclick="resetForm()" type="reset" value="Очистити" />
+					
+					</form>
+					 <form  class='areaForm'>
+						<label for="Gwidth">Введіть довжину стіни (м) -</label>
+						 <input type="text" name="Gwidth" id="Gwidth"><br>
+						 <label for="Gheight">Введіть висоту стіни (м) -</label>
+						 <input type="text" name="Gheight" id="Gheight"><br>
+						  <label for="Gaperture">Введіть площу прорізів (вікна, двері)-</label>
+						 <input type="text" name="Gaperture" id="Gaperture"><br>
+						  <input class="button subm" onclick="gasArea()" type="button" value="Порахувати" />
+					 <input class="button reset" onclick="resetForm()" type="reset" value="Очистити" />
+					 </form>
+				 </div>			
+		<!-- end of gas form -->
+
+		
+		
+		
+		
+		<!-- Brick form -->
+
+				<div class="forms" id='brick'>
+						<form  class='cubeForm'>
+					<label for="Bselect">Виберіть товщину -</label>
+					<select name="Bselect" id="Bselect">
+						<option value="0.065">65мм</option>											
+					</select><br>
+					<br>
+					<label for="Bquantity">Введіть потрібну кількість -</label>
+					<input type="text" name="Bquantity" id="Bquantity" onkeyup = "if(event.keyCode==13) {document.getElementById('subm').click();}else if(event.keyCode==27) {document.getElementById('reset').click();}"><br>			
+					  <input class="button subm" onclick="brickCube()" type="button" value="Порахувати" />
+					 <input class="button reset" onclick="resetForm()" type="reset" value="Очистити" />
+					
+					</form>
+					 <form  class='areaForm'>
+						<label for="Bwidth">Введіть довжину стіни (м) -</label>
+						 <input type="text" name="Bwidth" id="Bwidth"><br>
+						 <label for="Bheight">Введіть висоту стіни (м) -</label>
+						 <input type="text" name="Bheight" id="Bheight"><br>
+						  <label for="Baperture">Введіть площу прорізів (вікна, двері)-</label>
+						 <input type="text" name="Baperture" id="Baperture"><br>
+						  <input class="button subm" onclick="brickArea()" type="button" value="Порахувати" />
+					 <input class="button reset" onclick="resetForm()" type="reset" value="Очистити" />
+					 </form>
+				 </div>	
+		
+		<!-- end of brick form -->
+		
+		
+		
+		
+		<!-- Pinoplast form -->		
+				 <div  class="forms" id='pinoplast'>
+					<form  class='cubeForm'>
+					<label for="Pselect">Виберіть товщину -</label>
+					<select name="Pselect" id="Pselect">
+						<option value="1">10мм</option>
+						<option value="2">20мм</option>
+						<option value="3">30мм</option>
+						<option value="4">40мм</option>
+						<option value="5">50мм</option>
+						<option value="6">60мм</option>
+						<option value="7">70мм</option>
+						<option value="8">80мм</option>
+						<option value="9">90мм</option>
+						<option value="10">100мм</option>
+						
+					</select><br>
+					<br>
+					<label for="Pquantity">Введіть потрібну кількість -</label>
+					<input type="text" name="Pquantity" id="Pquantity" onkeyup = "if(event.keyCode==13) {document.getElementById('subm').click();}else if(event.keyCode==27) {document.getElementById('reset').click();}"><br>			
+					 <input class="button subm" onclick="pinoplastCube()" type="button" value="Порахувати" />
+					 <input class="button reset" onclick="resetForm()" type="reset" value="Очистити" />
+					
+					</form>
+					 <form  class='areaForm'>
+						<label for="Pwidth">Введіть довжину стіни (м) -</label>
+						 <input type="text" name="Pwidth" id="Pwidth"><br>
+						 <label for="Pheight">Введіть висоту стіни (м) -</label>
+						 <input type="text" name="Pheight" id="Pheight"><br>
+						 <label for="Paperture">Введіть площу прорізів (вікна, двері)-</label>
+						 <input type="text" name="Paperture" id="Paperture"><br>
+						  <input class="button subm" onclick="pinoplastArea()" type="button" value="Порахувати" />
+						<input class="button reset" onclick="resetForm()" type="reset" value="Очистити" />
+					 </form>
+						
+						 
+				 </div>
+		<!-- end of pinoplast form -->				 
+			
+			
+		<!-- eks pinoplast form -->				 
+				 <div class="forms" id='eksPinoplast'>
+						<form  class='cubeForm'>
+					<label for="Eselect">Виберіть товщину -</label>
+					<select name="Eselect" id="Eselect">
+						<option value="1">10мм</option>
+						<option value="2">20мм</option>
+						<option value="3">30мм</option>
+						<option value="4">40мм</option>
+						<option value="5">50мм</option>
+					</select><br>
+					<br>
+					<label for="Equantity">Введіть потрібну кількість -</label>
+					<input type="text" name="Equantity" id="Equantity" onkeyup = "if(event.keyCode==13) {document.getElementById('subm').click();}else if(event.keyCode==27) {document.getElementById('reset').click();}"><br>			
+					  <input class="button subm" onclick="eksCube()" type="button" value="Порахувати" />
+					 <input class="button reset" onclick="resetForm()" type="reset" value="Очистити" />
+					
+					</form>
+					 <form  class='areaForm'>
+						<label for="Ewidth">Введіть довжину стіни (м) -</label>
+						 <input type="text" name="Ewidth" id="Ewidth"><br>
+						 <label for="Eheight">Введіть висоту стіни (м) -</label>
+						 <input type="text" name="Eheight" id="Eheight"><br>
+						 <label for="Eaperture">Введіть площу прорізів (вікна, двері)-</label>
+						 <input type="text" name="Eaperture" id="Eaperture"><br>
+						  <input class="button subm" onclick="eksArea()" type="button" value="Порахувати" />
+					 <input class="button reset"  onclick="resetForm()" type="reset" value="Очистити" />
+					 </form>
+				 </div>
+				<!-- end of eks pinoplast form -->			 
+				 
+				 
+				 
+				
+				 
+				 
+				 
+				<div id='copyright'> &copy; by stvyzxx 2015</div>
+			   </div>
+				
+			</div>
+			<div class="sidebar">
+				<div id="sidebarP" class="sidebarTip">
+					<div class="sidebarHeader"><h3>Пінопласт</h3></div>
+					<h4>В 1 кубі</h4>  
+					<ul>
+						<li>пінопласт 10мм - 200 листів</li>
+						<li>пінопласт 20мм - 100 листів</li>
+						<li>пінопласт 30мм - 67 листів</li>
+						<li>пінопласт 40мм - 50 листів</li>
+						<li>пінопласт 50мм - 40 листів</li>
+						<li>пінопласт 60мм - 34 листів</li>
+						<li>пінопласт 70мм - 29 листів</li>
+						<li>пінопласт 80мм - 25 листів</li>
+						<li>пінопласт 90мм - 22 листів</li>
+						<li>пінопласт 100мм - 20 листів</li>
+					</ul>
+				</div>
+				<div id="sidebarE" class="sidebarTip">
+					<div class="sidebarHeader"><h3>Екструдований пінопласт</h3></div>
+					<h4>В 1 кубі</h4>
+					<ul class="sidebarUl">
+						<li class="sidebarLi">екструдований 10мм - 147 листів</li>
+						<li class="sidebarLi">екструдований 20мм - 73 листів</li>
+						<li class="sidebarLi">екструдований 30мм - 50 листів</li>
+						<li class="sidebarLi">екструдований 40мм - 37 листів</li>
+						<li class="sidebarLi">екструдований 50мм - 29 листів</li>
+					</ul>
+				</div>
+				<div id="sidebarB" class="sidebarTip">
+					<div class="sidebarHeader"><h3>Цегла</h3></div>
+					<h4>В 1 кубі</h4>
+					<ul class="sidebarUl">
+						<li class="sidebarLi">Цегла 250х120х65 - 500 шт</li>
+					</ul>
+				</div>
+				<div id="sidebarG" class="sidebarTip">
+					<div class="sidebarHeader"><h3>Газобетон</h3></div>
+					<h4>В 1 кубі</h4>
+					<ul class="sidebarUl">
+						<li class="sidebarLi">Газобетон 590х240х60мм - 118 шт</li>
+						<li class="sidebarLi">Газобетон 590х240х80мм - 89 шт</li>
+						<li class="sidebarLi">Газобетон 590х240х100мм - 71 шт</li>
+						<li class="sidebarLi">Газобетон 590х240х120мм - 59 шт</li>
+						<li class="sidebarLi">Газобетон 590х240х180мм - 40 шт</li>
+						<li class="sidebarLi">Газобетон 590х240х240мм - 30 шт</li>
+						<li class="sidebarLi">Газобетон 590х240х300мм - 24 шт</li>
+						<li class="sidebarLi">Газобетон 590х240х360мм - 20 шт</li>
+					</ul>
+				</div>
+			</div>
+		</div>	
+		<script src="js/script.js" type="text/javascript"></script>
+		<script src="js/count.js" type="text/javascript"></script>
+		<script src="js/about.js" type="text/javascript"></script>
+		<script src="js/jq.js" type="text/javascript"></script>
+
+	
+</body>
+</html>
